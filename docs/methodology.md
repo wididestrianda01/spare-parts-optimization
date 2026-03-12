@@ -83,7 +83,7 @@ $$\ell^* = \arg\max_j \; Q_j(s_j)$$
 
 3. If $C^{(k-1)} + c_{\ell^*} > C_{\text{budget}}$, **stop**.
 
-4. Update: $s_{\ell^*} \leftarrow s_{\ell^*} + 1$, $\; C \leftarrow C + c_{\ell^*}$, $\; \text{EBO} \leftarrow \text{EBO} - R_{\ell^*}(s_{\ell^*})$.
+4. Update: $s_{\ell} \leftarrow s_{\ell} + 1$, $\; C \leftarrow C + c_{\ell}$, $\; \text{EBO} \leftarrow \text{EBO} - R_{\ell}(s_{\ell})$.
 
 5. Record the new state as an **efficient point**.
 
@@ -103,21 +103,21 @@ $O(K \cdot N)$ where $K$ is the total number of spares purchased (at most $C_{\t
 
 The problem is cast as a **Distribution-of-Effort** problem. Each of the $N$ LRUs corresponds to one *stage*. The state variable $s_n$ is the remaining budget available to stages $n, n+1, \ldots, N$.
 
-**Decision:** $x_n \in \mathcal{F}_n(s_n) = \{0, c_n, 2c_n, \ldots\} \cap [0, s_n]$ — the budget allocated to LRU $n$.
+**Decision:** $x_{n} \in F_{n}(s_{n}) = \lbrace 0,\ c_{n},\ 2c_{n},\ \ldots \rbrace \cap [0,\ s_{n}]$ — the budget allocated to LRU $n$.
 
-**State transition:** $s_{n+1} = s_n - x_n$ (linear, so the Principle of Optimality holds).
+**State transition:** $s_{n+1} = s_{n} - x_{n}$ (linear, so the Principle of Optimality holds).
 
-**Stage contribution:** $P_n(x_n) = \text{EBO}_n\!\left(\frac{x_n}{c_n}\right)$.
+**Stage contribution:** $P_{n}(x_{n}) = \text{EBO}_{n}\!\left(\dfrac{x_{n}}{c_{n}}\right)$.
 
 **Bellman recursion (backward, from stage $N$ to stage $1$):**
 
-$$f_n^*(s_n) = \min_{x_n \in \mathcal{F}_n(s_n)} \left\{ P_n(x_n) + f_{n+1}^*(s_n - x_n) \right\}$$
+$$f_{n}^{*}(s_{n}) = \min_{x_{n} \in F_{n}(s_{n})} \left\{ P_{n}(x_{n}) + f_{n+1}^{*}(s_{n} - x_{n}) \right\}$$
 
-**Terminal condition:** $f_{N+1}^*(s) = 0 \;\forall s$ (no future stages).
+**Terminal condition:** $f_{N+1}^{*}(s) = 0 \;\forall s$ (no future stages).
 
 ### Implementation
 
-The backward recursion fills a table $f^*$ of size $(N+1) \times (C_{\text{budget}}+1)$ and records the optimal policy $x_n^*(s_n)$. A forward reconstruction pass then traces the optimal allocation vector for any desired budget level.
+The backward recursion fills a table $f^{*}$ of size $(N+1) \times (C_{\text{budget}}+1)$ and records the optimal policy $x_{n}^{*}(s_{n})$. A forward reconstruction pass then traces the optimal allocation vector for any desired budget level.
 
 ### Complexity
 

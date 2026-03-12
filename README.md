@@ -57,11 +57,11 @@ This is iterated until the budget is exhausted, producing the **southwestern bou
 
 The problem is modelled as a **Distribution-of-Effort** problem. Each LRU corresponds to one stage. The backward recursion is:
 
-$$f_n^*(s_n) = \min_{x_n \in \mathcal{F}_n(s_n)} \left\{ \text{EBO}_n\!\left(\frac{x_n}{c_n}\right) + f_{n+1}^*(s_n - x_n) \right\}$$
+$$f_{n}^{*}(s_{n}) = \min_{x_{n} \in F_{n}(s_{n})} \left\{ \text{EBO}_{n}\left(\frac{x_{n}}{c_{n}}\right) + f_{n+1}^{*}(s_{n} - x_{n}) \right\}$$
 
-where $\mathcal{F}_n(s_n) = \{0,\, c_n,\, 2c_n,\, \ldots\} \cap [0, s_n]$ is the set of feasible budget allocations at stage $n$.
+where $F_{n}(s_{n}) = \lbrace 0,\ c_{n},\ 2c_{n},\ \ldots \rbrace \cap [0,\ s_{n}]$ is the set of feasible budget allocations at stage $n$.
 
-A forward reconstruction pass then retrieves the optimal allocation vector for every integer budget in $[0, C_{\text{budget}}]$.
+A forward reconstruction pass then retrieves the optimal allocation vector for every integer budget in $[0,\ C_{\text{budget}}]$.
 
 ---
 
@@ -71,13 +71,9 @@ A forward reconstruction pass then retrieves the optimal allocation vector for e
 
 The EBO–cost curve is strictly decreasing and convex, reflecting diminishing returns as the spare parts budget grows. The first iteration selects the LRU with the best marginal efficiency ratio, not necessarily the one with the highest failure rate — illustrating the difference between absolute and relative optimisation criteria.
 
-![Efficient Solutions Curve](docs/figures/efficient_frontier.png)
-
 ### MA vs DP Comparison
 
 At every budget level corresponding to a Marginal Allocation efficient point, Dynamic Programming produces an **identical allocation and EBO** — confirming that MA correctly identifies the convex hull of the solution set. At intermediate (non-efficient) budgets, DP solutions lie slightly above the MA curve, as expected: the MA curve is a piecewise-linear interpolation (convex hull), while DP solves the exact integer problem.
-
-![MA vs DP](docs/figures/ma_vs_dp.png)
 
 ### Baseline Evaluation
 
