@@ -57,7 +57,7 @@ This is iterated until the budget is exhausted, producing the **southwestern bou
 
 The problem is modelled as a **Distribution-of-Effort** problem. Each LRU corresponds to one stage. The backward recursion is:
 
-$$f_{n}^{*}(s_{n}) = \min_{x_{n} \in F_{n}(s_{n})} \left\{ \text{EBO}_{n}\left(\frac{x_{n}}{c_{n}}\right) + f_{n+1}^{*}(s_{n} - x_{n}) \right\}$$
+$$f_{n}^{\ast}(s_{n}) = \min_{x_{n} \in F_{n}(s_{n})} \left\lbrace \text{EBO}_{n}\left(\frac{x_{n}}{c_{n}}\right) + f_{n+1}^{\ast}(s_{n} - x_{n}) \right\rbrace$$
 
 where $F_{n}(s_{n}) = \lbrace 0,\ c_{n},\ 2c_{n},\ \ldots \rbrace \cap [0,\ s_{n}]$ is the set of feasible budget allocations at stage $n$.
 

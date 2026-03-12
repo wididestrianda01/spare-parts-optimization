@@ -79,9 +79,9 @@ The multi-item stocking problem is a **multi-objective optimisation** problem: m
 $$Q_j(s_j) = \frac{R_j(s_j)}{c_j}$$
 
 2. Select the LRU with the highest quotient:
-$$\ell^* = \arg\max_j \; Q_j(s_j)$$
+$$\ell^\ast = \arg\max_j \; Q_j(s_j)$$
 
-3. If $C^{(k-1)} + c_{\ell^*} > C_{\text{budget}}$, **stop**.
+3. If $C^{(k-1)} + c_{\ell^\ast} > C_{\text{budget}}$, **stop**.
 
 4. Update: $s_{\ell} \leftarrow s_{\ell} + 1$, $\; C \leftarrow C + c_{\ell}$, $\; \text{EBO} \leftarrow \text{EBO} - R_{\ell}(s_{\ell})$.
 
@@ -107,17 +107,17 @@ The problem is cast as a **Distribution-of-Effort** problem. Each of the $N$ LRU
 
 **State transition:** $s_{n+1} = s_{n} - x_{n}$ (linear, so the Principle of Optimality holds).
 
-**Stage contribution:** $P_{n}(x_{n}) = \text{EBO}_{n}\!\left(\dfrac{x_{n}}{c_{n}}\right)$.
+**Stage contribution:** $P_{n}(x_{n}) = \text{EBO}_{n}\left(\dfrac{x_{n}}{c_{n}}\right)$.
 
 **Bellman recursion (backward, from stage $N$ to stage $1$):**
 
-$$f_{n}^{*}(s_{n}) = \min_{x_{n} \in F_{n}(s_{n})} \left\{ P_{n}(x_{n}) + f_{n+1}^{*}(s_{n} - x_{n}) \right\}$$
+$$f_{n}^{\ast}(s_{n}) = \min_{x_{n} \in F_{n}(s_{n})} \left\lbrace P_{n}(x_{n}) + f_{n+1}^{\ast}(s_{n} - x_{n}) \right\rbrace$$
 
-**Terminal condition:** $f_{N+1}^{*}(s) = 0 \;\forall s$ (no future stages).
+**Terminal condition:** $f_{N+1}^{\ast}(s) = 0 \;\forall s$ (no future stages).
 
 ### Implementation
 
-The backward recursion fills a table $f^{*}$ of size $(N+1) \times (C_{\text{budget}}+1)$ and records the optimal policy $x_{n}^{*}(s_{n})$. A forward reconstruction pass then traces the optimal allocation vector for any desired budget level.
+The backward recursion fills a table $f^{\ast}$ of size $(N+1) \times (C_{\text{budget}}+1)$ and records the optimal policy $x_{n}^{\ast}(s_{n})$. A forward reconstruction pass then traces the optimal allocation vector for any desired budget level.
 
 ### Complexity
 
